@@ -1,0 +1,87 @@
+/* ============================================
+   20. ABOUT PAGE — PLAIN STRUCTURED LAYOUT
+   [Op 1] No card/border wrapper — clean text
+          with generous spacing does the
+          "structure" work instead.
+   [Op 2] Consistent max-width keeps line length
+          readable, centered on the page.
+   ============================================ */
+.about-main {
+  max-width: 700px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.about-hook h2 {
+  font-family: 'Poppins', Arial, sans-serif;
+  font-size: 1.8rem;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.about-section {
+  margin-bottom: 48px;
+}
+
+.about-section h3 {
+  font-family: 'Poppins', Arial, sans-serif;
+  font-size: 1.3rem;
+  color: var(--gold);
+  margin-bottom: 12px;
+  border-bottom: 2px solid var(--bronze);
+  padding-bottom: 6px;
+}
+
+.about-section p {
+  color: var(--cream);
+  font-size: 1.05rem;
+}
+
+.skills-list {
+  list-style: none;
+}
+
+.skills-list li {
+  color: var(--cream);
+  margin-bottom: 12px;
+  padding-left: 16px;
+  border-left: 3px solid var(--bronze);
+}
+
+.skills-list strong {
+  color: var(--gold);
+}
+
+.about-cv,
+.about-closing {
+  text-align: center;
+}
+
+/* ============================================
+   7. CTA BUTTON — updated to Axis-style blocky
+   [Op 1] Thick border, hard offset shadow —
+          matches .app-card and .contact-btn.
+   [Op 2] Instant color-invert on hover, same
+          fast-transition pattern as the rest
+          of the site.
+   ============================================ */
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--bronze);
+  color: var(--cream);
+  border: 3px solid var(--charcoal);
+  box-shadow: 6px 6px 0 var(--gold);
+  padding: 14px 24px;
+  text-decoration: none;
+  font-weight: 500;
+  border-radius: 0;              /* sharp corners, matching the rest of the blocky system */
+  transition: background-color 0.1s ease, color 0.1s ease;
+}
+
+.cta-button:hover {
+  background-color: var(--gold);
+  color: var(--charcoal);
+}

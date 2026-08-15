@@ -1,0 +1,800 @@
+/* ============================================
+   1. COLOR VARIABLES
+   Define the palette once here — every other
+   rule below references these by name.
+   Change a color here, it updates everywhere.
+   ============================================ */
+:root {
+  --gold: #C9A227;
+  --navy: #0A1628;
+  --charcoal: #1C1C1C;
+  --cream: #F8F1E3;
+  --bronze: #A67C00;
+  --nice_grey: #8A817C;
+  --grey: #4A4A4A;
+}
+
+/* ============================================
+   2. RESET
+   Browsers apply inconsistent default spacing
+   to elements. This zeroes it out so every
+   page starts from the same clean baseline.
+   ============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* padding/border count INSIDE declared width, not added on top */
+}
+
+/* ============================================
+   3. BASE BODY STYLES
+   Applies site-wide unless overridden.
+   ============================================ */
+body {
+  font-family: 'Inter', Arial, sans-serif;  /* body text uses Inter */
+  line-height: 1.6;
+  background-color: var(--cream);
+  color: var(--charcoal);
+}
+
+/* ============================================
+   4. HEADER
+   Dark navy bar containing site name + nav.
+   position: relative is REQUIRED here — it lets
+   the gold line and shine (below) position
+   themselves against the header's own box.
+   ============================================ */
+header {
+  background-color: var(--charcoal);
+  color: var(--cream);
+  padding: 20px 40px;
+  text-align: center;
+  position: relative;
+  /* NOTE: do NOT add overflow:hidden here — it would
+     clip the shine streak before it can sweep across */
+}
+
+
+/* ============================================
+/* ============================================
+/* Container: centers the whole title as one unit.
+   Because "Sasa |" is narrower than "Sasa | Electrical Design",
+   the browser naturally RE-CENTERS the whole line as the tagline
+   grows in — this is what shifts "Sasa" slightly left automatically. */
+.site-title {
+  display: inline-flex;
+  align-items: baseline;
+  font-size: 2.8rem;
+}
+
+.name {
+  color: var(--gold);
+}
+
+.divider {
+  color: var(--bronze);
+  margin: 0 10px;
+}
+
+/* The clipping wrapper: starts at 0 width, hides the tagline inside it */
+.tagline-wrap {
+  display: inline-block;
+  overflow: hidden;         /* clips the tagline text until width grows */
+  width: 0;                 /* starts fully hidden */
+  white-space: nowrap;      /* keeps "Electrical Design" on one line while clipped */
+  animation: revealTagline 1s ease forwards;
+  animation-delay: 0.6s;    /* waits 0.6s after page load before starting */
+}
+
+.tagline {
+  color: var(--gold);
+  font-size: 1.8rem;    /* smaller than the 2.8rem inherited from .site-title */
+}
+
+/* Grows the wrapper from 0 to its full content width,
+   revealing the text left-to-right, as if sliding out from the "|" */
+@keyframes revealTagline {
+  0%   { width: 0; }
+  100% { width: 240px; }   /* adjust this if "Electrical Design" gets clipped or leaves extra gap */
+}
+/* ============================================
+/* ============================================
+
+
+/* --- 4a. Gold line under the header ---
+   ::after injects a fake element after the header's
+   content, with no extra HTML needed. */
+header::after {
+  content: "";              /* required for ::after to render at all */
+  position: absolute;       /* MUST be absolute, not relative — anchors to header's edge */
+  bottom: -3px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--gold);
+}
+
+/* --- 4b. Shine streak that sweeps across the gold line ---
+   ::before injects a second fake element, stacked
+   independently from ::after, same header. */
+header::before {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: -100%;               /* starts fully off-screen to the left */
+  width: 50%;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--cream),
+    transparent
+  );
+  animation: shine 5s infinite; /* name MUST match the @keyframes name below exactly */
+}
+
+/* Defines the shine's motion, frame by frame, as % of the 5s duration */
+@keyframes shine {
+  0%   { left: -100%; }  /* start: off-screen left */
+  50%  { left: 100%; }   /* by 2.5s: swept to off-screen right */
+  100% { left: 100%; }   /* stays off-screen right until it loops */
+}
+/* ============================================
+/* ============================================
+
+
+
+/* ============================================
+   5. NAVIGATION (pill-shaped bar, curved ends)
+   ============================================ */
+/* Pill-shaped nav bar — now navy background instead of cream */
+/* ============================================
+   5. NAVIGATION — Axis-style blocky tabs
+   [Op 1] Nav container: thick border, hard
+          offset shadow, matches app-card system.
+   [Op 2] Each tab is its own small blocky box
+          (individual border), not just plain text.
+   [Op 3] Hover/active: instant color inversion,
+          same pattern as .app-card:hover.
+   [Op 4] Media query: tightens spacing on narrow
+          screens so 5 tabs wrap cleanly.
+   DEPENDENCY: uses same --gold/--bronze/--charcoal
+   variables as app-card system (Section 17).
+   ============================================ */
+nav {
+  background-color: var(--bronze);
+  border: 3px solid var(--charcoal);
+  box-shadow: 6px 6px 0 var(--gold);
+  padding: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Each tab: its own small bordered box */
+nav a {
+  display: block;
+  color: var(--cream);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px 16px;
+  border: 2px solid var(--bronze);
+  transition: background-color 0.1s ease, color 0.1s ease; /* instant = fast transition */
+}
+
+/* Hover: instant fill, matches app-card hover behavior */
+nav a:hover {
+  background-color: var(--gold);
+  color: var(--charcoal);
+}
+
+/* Active/current page tab: permanently filled, no hover needed to see it */
+nav a.active {
+  background-color: var(--gold);
+  color: var(--charcoal);
+  border-color: var(--gold);
+}
+
+/* ============================================
+   5a. MOBILE ADJUSTMENT
+   [Op 1] Tightens nav padding/gaps below 500px
+          so 5 tabs wrap into 2-3 rows cleanly
+          instead of feeling cramped.
+   ============================================ */
+@media (max-width: 500px) {
+  nav {
+    padding: 8px;
+    gap: 6px;
+  }
+
+  nav a {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+}
+/* ============================================
+   6. HERO SECTION
+   Mobile-first: stacked by default (see below).
+   Desktop override lives in the media query
+   at the bottom of this file.
+   ============================================ */
+#hero {
+  max-width: 1000px;
+  margin: 80px auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;   /* stacked = the default/mobile layout */
+  align-items: center;
+  gap: 32px;
+}
+
+.hero-text {
+  text-align: center;       /* centered while stacked */
+}
+
+
+
+/* ============================================
+   7. CTA BUTTON
+   Reusable class — used in hero now, could be
+   reused elsewhere later (e.g. Contact page).
+   ============================================ */
+.cta-button {
+  display: inline-block;     /* lets an <a> (normally inline) accept padding like a block */
+  background-color: var(--gold);
+  color: var(--navy);
+  padding: 12px 28px;
+  border-radius: 8px;      /* same pill shape as nav, for visual consistency */
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: var(--bronze);
+}
+
+/* ============================================
+   8. FOOTER
+   ============================================ */
+footer {
+  background-color: var(--nice_grey);
+  color: var(--charcoal);
+  text-align: center;
+  padding: 24px;
+  margin-top: 60px;
+}
+
+footer a {
+  color: var(--gold);
+}
+
+/* ============================================
+   9. DESKTOP LAYOUT OVERRIDE
+   Only applies at 900px+ width.
+   Switches hero from stacked to side-by-side.
+   ============================================ */
+
+
+/* ============================================
+   10. BODY BACKGROUND
+   Whole page background is now charcoal.
+   Text color flips to cream (light) for
+   contrast against the dark background.
+   ============================================ */
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  line-height: 1.6;
+  background-color: var(--charcoal);
+  color: var(--cream);
+}
+
+/* ============================================
+   11. HERO SECTION
+   Just centers the card on the page.
+   Slideshow/CTA button removed for now —
+   will be re-added once card layout is confirmed.
+   ============================================ */
+#hero {
+  max-width: 1000px;
+  margin: 80px auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+}
+
+/* ============================================
+   12. CARD
+   Grey background, full gold border all around
+   (not just top). Heading gold, paragraph white.
+   ============================================ */
+.card {
+  background-color: #2E2E2E;        /* grey — distinct from charcoal body and navy elsewhere */
+  border: 2px solid var(--gold);    /* full border on all 4 sides, replaces the old border-top-only */
+  border-radius: 12px;
+  padding: 40px;
+  max-width: 700px;
+  text-align: center;
+}
+
+.card h2 {
+  font-family: 'Poppins', Arial, sans-serif;
+  font-size: 2rem;
+  margin-bottom: 16px;
+  color: var(--gold);
+}
+
+.card p {
+  font-size: 1.1rem;
+  color: #ffffff;                   /* changed from var(--cream) to pure white per your request */
+}
+
+/* ============================================
+   13. QUOTE CARD
+   Second card, scroll-triggered fade-in
+   (different animation style from card 1,
+   which faded on page load instead of scroll)
+   ============================================ */
+#quote-card {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.card-quote {
+  background-color: #2E2E2E;
+  border: 2px solid var(--gold);
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 700px;
+  text-align: center;
+  opacity: 0;                     /* starts invisible, JS will reveal on scroll */
+  transform: translateY(20px);    /* starts slightly lower, settles up into place */
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.card-quote.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-quote p {
+  font-style: italic;
+  font-size: 1.2rem;
+  color: #ffffff;
+}
+
+/* ============================================
+   14. TOOLS CARD
+   Third card: icon + skill line per tool,
+   laid out in a row (wraps on narrow screens).
+   ============================================ */
+#tools-card {
+  max-width: 1000px;
+  margin: 40px auto 80px;
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.card-tools {
+  background-color: #2E2E2E;
+  border: 2px solid var(--gold);
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 700px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 24px;
+}
+
+.tool {
+  text-align: center;
+}
+
+.tool img {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 8px;
+}
+
+.tool p {
+  color: #ffffff;
+  font-size: 0.95rem;
+}
+
+
+
+/* ============================================
+   16. APPS STACK — SECTION HEADER
+   [Op 1] Small eyebrow label above the title,
+          matches Axis's "// label" convention.
+   [Op 2] Section title, large and bold.
+   DEPENDENCY: none.
+   ============================================ */
+.apps-header {
+  max-width: 1000px;
+  margin: 80px auto 40px;
+  padding: 0 20px;
+}
+
+.apps-eyebrow {
+  font-family: 'Inter', monospace;
+  font-size: 0.85rem;
+  color: var(--gold);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.apps-title {
+  font-family: 'Poppins', Arial, sans-serif;
+  font-size: 2rem;
+  color: var(--cream);
+}
+
+/* ============================================
+   17. APP CARD (Axis-style: blocky, hard shadow)
+   [Op 1] Thick 4px gold border — matches Axis's
+          stated "4px borders" design language.
+   [Op 2] Hard offset shadow (no blur) instead of
+          a soft drop-shadow — this is the "8px
+          hard shadow" look: a solid duplicate
+          rectangle offset behind the card, not
+          a blurred glow.
+   [Op 3] Flex layout: label text on the left,
+          logo pinned to the right.
+   [Op 4] Hover state: instant color inversion
+          (background/text swap immediately,
+          no fade) — matches Axis's stated
+          "instant color inversions on hover."
+   DEPENDENCY: requires .apps-header above it
+   and images/icons/*.png files to exist.
+   ============================================ */
+.app-card {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto 24px;
+  padding: 24px 32px;
+  background-color: var(--charcoal);
+  border: 4px solid var(--gold);       /* thick border, Axis-style */
+  box-shadow: 8px 8px 0 var(--bronze); /* HARD shadow: no blur, solid offset block */
+  transition: background-color 0.1s ease, color 0.1s ease; /* fast = "instant" inversion */
+}
+
+.app-card__label {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--cream);
+}
+
+.app-card__logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;   /* keeps logo proportions correct, never stretched */
+}
+
+/* Instant hover inversion: background flips to gold, text flips to charcoal */
+.app-card:hover {
+  background-color: var(--gold);
+}
+
+.app-card:hover .app-card__label {
+  color: var(--charcoal);
+}
+/* Override for logos that render visually smaller than others.
+   Uses transform:scale instead of width/height so the image's
+   LAYOUT size stays the same — only its VISUAL size grows,
+   meaning the card/border does not resize to accommodate it. */
+.app-card__logo--large {
+  transform: scale(5.5);   /* 1.5 = 150% visual size, adjust as needed */
+
+
+}
+
+
+
+/* ============================================
+   21. HOME PAGE — PLAIN HOOK
+   [Op 1] Matches About's plain-text treatment —
+          no card/border, just typography + spacing.
+   ============================================ */
+.home-hook {
+}
+
+.home-hook h2 {
+  font-family: 'Poppins', Arial, sans-serif;
+  font-size: 2rem;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.home-hook p {
+  color: var(--cream);
+  font-size: 1.1rem;
+}
+
+/* ============================================
+   23. GLOBAL OVERFLOW FIX
+   [Op 1] Prevents ANY element (shadows, animations,
+          slightly-oversized boxes) from causing a
+          horizontal scrollbar to appear/flicker.
+   [Op 2] Safe to apply globally — this doesn't
+          hide content, just clips accidental
+          overflow past the viewport edge.
+   ============================================ */
+html, body {
+  overflow-x: hidden;
+}
+
+/* ============================================
+   21a. HOOK LAYOUT
+   [Op 1] Left-aligned, size reverted to pre-
+          eyebrow value (2rem, gold, Poppins).
+   ============================================ */
+.home-hook {
+  max-width: 700px;
+  margin: 80px auto 60px 20px;   /* left-anchored, not centered */
+  padding: 0 20px;
+  text-align: left;
+}
+
+.hook-title {
+  font-family: 'Poppins', Arial, sans-serif;
+  font-size: 2rem;
+  color: var(--gold);
+}
+
+.hook-line {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+/* ============================================
+   21b. LINE 1 — fixed pipe, text grows right,
+   pipe fades away once done.
+   [Op 1] Pipe visible immediately, static.
+   [Op 2] Text wrap grows 0 -> full width (delay
+          0.3s, duration 1s) — same trick as the
+          header's tagline reveal.
+   [Op 3] Pipe fades out (delay 1.3s, dur 0.5s)
+          once the text finishes revealing.
+   ============================================ */
+.hook-pipe-l1 {
+  color: var(--bronze);
+  margin-right: 8px;
+  animation: fadeOutPipe 0.5s ease forwards;
+  animation-delay: 1.3s;
+}
+
+.hook-wrap-l1 {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  animation: growWidth 1s ease forwards;
+  animation-delay: 0.3s;
+  --target-width: 230px;   /* adjust if "Electrical Design" clips or leaves gap */
+}
+
+/* ============================================
+   21c. LINE 2 PART A — MOVING pipe.
+   [Op 1] Wrap grows 0 -> full width, starting
+          AFTER line 1 completes (delay 2.0s).
+   [Op 2] ::after places a "|" at the wrap's
+          right edge — as width grows, this edge
+          (and the pipe drawn on it) travels
+          right, giving the illusion the pipe
+          itself is moving and revealing text.
+   ============================================ */
+.hook-wrap-moving {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  animation: growWidth 1s ease forwards;
+  animation-delay: 2.0s;
+  --target-width: 250px;   /* adjust if "Building Systems" clips or leaves gap */
+}
+
+.hook-wrap-moving::after {
+  content: "|";
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: var(--bronze);
+  opacity: 1;
+  animation: fadeOutPipe 0.3s ease forwards;
+  animation-delay: 3.0s;   /* fades out exactly as the fixed pipe fades in */
+}
+
+/* ============================================
+   21d. LINE 2 PART B — pipe stops, becomes fixed.
+   [Op 1] Static pipe fades IN right as the moving
+          pipe fades OUT (same delay/duration) —
+          a seamless handoff between the two.
+   [Op 2] "Drafting Plans" then grows out to the
+          right of this now-fixed pipe.
+   ============================================ */
+.hook-pipe-l2 {
+  color: var(--bronze);
+  margin: 0 8px;
+  opacity: 0;
+  animation: fadeInPipe 0.3s ease forwards;
+  animation-delay: 3.0s;
+}
+
+.hook-wrap-l2b {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  animation: growWidth 1s ease forwards;
+  animation-delay: 3.3s;
+  --target-width: 210px;   /* adjust if "Drafting Plans" clips or leaves gap */
+}
+
+/* ============================================
+   21e. SHARED KEYFRAMES
+   [Op 1] growWidth: generic 0 -> target-width
+          reveal, reused by all 3 text wraps.
+   [Op 2] fadeOutPipe / fadeInPipe: simple opacity
+          transitions, reused by both pipes.
+   ============================================ */
+@keyframes growWidth {
+  from { width: 0; }
+  to   { width: var(--target-width); }
+}
+
+@keyframes fadeOutPipe {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes fadeInPipe {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Invisible spacer — same size as the real pipe, aligns Line 2's start with Line 1's */
+.hook-pipe-spacer {
+  visibility: hidden;
+  margin-right: 8px;
+}
+
+.hook-desc {
+  color: var(--cream);
+  font-size: 1.1rem;
+  margin-top: 20px;
+  max-width: 600px;
+}
+
+.hook-desc {
+  color: var(--cream);
+  font-size: 1.1rem;
+  margin-top: 20px;
+  padding-left: 24px;    /* roughly matches where the pipe + margin push the title text to */
+  max-width: 600px;
+}
+
+
+
+/* ============================================
+   24. HOME HERO ROW LAYOUT
+   [Op 1] Mobile default: stacked (column).
+   [Op 2] Desktop (900px+): side-by-side, and
+          align-items:stretch makes the slideshow
+          automatically match the text block's
+          height — no manual calculation needed.
+   ============================================ */
+.home-hero-row {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-width: 1000px;
+  margin: 80px auto 60px;
+  padding: 0 20px;
+}
+
+@media (min-width: 900px) {
+  .home-hero-row {
+    flex-direction: row;
+    align-items: stretch;   /* THIS makes the slideshow's height match .home-hook's height */
+  }
+
+  .home-hook {
+    flex: 1;
+  }
+}
+
+/* ============================================
+   25. SLIDESHOW CONTAINER
+   [Op 1] Fixed border regardless of each image's
+          real dimensions — object-fit:cover on
+          the images (below) handles cropping to
+          fit, the container's border never changes.
+   [Op 2] overflow:hidden clips images sliding
+          past the edges during transitions.
+   [Op 3] Mobile gets a fixed height (can't stretch-
+          match text height when stacked); desktop
+          height comes from the stretch behavior above.
+   ============================================ */
+.home-slideshow {
+  position: relative;
+  overflow: hidden;
+  border: none;              /* removed */
+  border-radius: 0;          /* removed — sharp corners */
+  box-shadow: 8px 8px 0 var(--bronze);   /* same hard-shadow trick as your app-cards */
+  height: 280px;
+}
+
+@media (min-width: 900px) {
+  .home-slideshow {
+    flex: 1;
+    height: auto;
+             /* let flex-stretch control height instead */
+  }
+}
+
+/* ============================================
+IMAGES PLACE :
+
+/* ============================================
+/* ============================================
+   26. SLIDE IMAGES — slide transition
+   [Op 1] Every image fills the container exactly
+          (object-fit:cover = fixed border look,
+          regardless of source image size).
+   [Op 2] Default position: off-screen right,
+          ready to be pulled in.
+   [Op 3] .active = current visible image, at
+          translateX(0).
+   [Op 4] .exit = the outgoing image, pushed to
+          the right as the next one enters.
+   [Op 5] .incoming = starts off-screen LEFT
+          (set instantly, no transition), then
+          JS removes this class and adds .active
+          on the next frame, triggering the
+          transition INTO view.
+   ============================================ */
+.slide-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translateX(100%);
+  transition: transform 0.8s ease;
+}
+
+.slide-img.active {
+  transform: translateX(0);
+}
+
+.slide-img.exit {
+  transform: translateX(100%);
+}
+
+.slide-img.incoming {
+  transition: none;         /* no animation for this instant repositioning */
+  transform: translateX(-100%);
+}

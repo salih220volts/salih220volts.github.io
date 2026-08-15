@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gold Color Palettes</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #111;
+      color: #eee;
+      padding: 40px 20px;
+      line-height: 1.5;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 2.2rem;
+      color: #D4AF37;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 50px;
+    }
+
+    .palette {
+      max-width: 900px;
+      margin: 0 auto 50px;
+      background: #1a1a1a;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    .palette-title {
+      padding: 18px 24px;
+      font-size: 1.25rem;
+      font-weight: 600;
+      border-bottom: 1px solid #333;
+    }
+
+    .colors {
+      display: flex;
+      height: 140px;
+    }
+
+    .color {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 12px;
+      cursor: pointer;
+      transition: flex 0.3s ease;
+      position: relative;
+    }
+
+    .color:hover {
+      flex: 1.4;
+    }
+
+    .color span {
+      background: rgba(0,0,0,0.55);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-family: monospace;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .color:hover span {
+      opacity: 1;
+    }
+
+    /* Make text readable on light colors */
+    .color.light span {
+      background: rgba(255,255,255,0.7);
+      color: #111;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      color: #666;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Gold Color Palettes</h1>
+  <p class="subtitle">Click any color to copy its hex code</p>
+
+  <!-- Palette 1 -->
+  <div class="palette">
+    <div class="palette-title">1. Classic Elegant Gold</div>
+    <div class="colors">
+      <div class="color" style="background:#D4AF37" onclick="copyColor(this)"><span>#D4AF37</span></div>
+      <div class="color light" style="background:#F5F0E6" onclick="copyColor(this)"><span>#F5F0E6</span></div>
+      <div class="color" style="background:#1A1A1A" onclick="copyColor(this)"><span>#1A1A1A</span></div>
+      <div class="color" style="background:#4A4A4A" onclick="copyColor(this)"><span>#4A4A4A</span></div>
+      <div class="color light" style="background:#FFFEF7" onclick="copyColor(this)"><span>#FFFEF7</span></div>
+    </div>
+  </div>
+
+  <!-- Palette 2 -->
+  <div class="palette">
+    <div class="palette-title">2. Luxury Dark Gold</div>
+    <div class="colors">
+      <div class="color" style="background:#C9A227" onclick="copyColor(this)"><span>#C9A227</span></div>
+      <div class="color" style="background:#0A1628" onclick="copyColor(this)"><span>#0A1628</span></div>
+      <div class="color" style="background:#1C1C1C" onclick="copyColor(this)"><span>#1C1C1C</span></div>
+      <div class="color light" style="background:#F8F1E3" onclick="copyColor(this)"><span>#F8F1E3</span></div>
+      <div class="color" style="background:#A67C00" onclick="copyColor(this)"><span>#A67C00</span></div>
+    </div>
+  </div>
+
+  <!-- Palette 3 -->
+  <div class="palette">
+    <div class="palette-title">3. Modern Warm Gold</div>
+    <div class="colors">
+      <div class="color" style="background:#E8B923" onclick="copyColor(this)"><span>#E8B923</span></div>
+      <div class="color" style="background:#C65D3B" onclick="copyColor(this)"><span>#C65D3B</span></div>
+      <div class="color light" style="background:#EDE4D7" onclick="copyColor(this)"><span>#EDE4D7</span></div>
+      <div class="color" style="background:#5C6B4A" onclick="copyColor(this)"><span>#5C6B4A</span></div>
+      <div class="color" style="background:#3B2F2F" onclick="copyColor(this)"><span>#3B2F2F</span></div>
+    </div>
+  </div>
+
+  <!-- Palette 4 -->
+  <div class="palette">
+    <div class="palette-title">4. Soft Romantic Gold</div>
+    <div class="colors">
+      <div class="color" style="background:#D4A017" onclick="copyColor(this)"><span>#D4A017</span></div>
+      <div class="color light" style="background:#E8B4B8" onclick="copyColor(this)"><span>#E8B4B8</span></div>
+      <div class="color" style="background:#A8B5A2" onclick="copyColor(this)"><span>#A8B5A2</span></div>
+      <div class="color light" style="background:#F9F5F0" onclick="copyColor(this)"><span>#F9F5F0</span></div>
+      <div class="color" style="background:#C9A9A6" onclick="copyColor(this)"><span>#C9A9A6</span></div>
+    </div>
+  </div>
+
+  <!-- Palette 5 -->
+  <div class="palette">
+    <div class="palette-title">5. Royal Gold + Deep Colors</div>
+    <div class="colors">
+      <div class="color" style="background:#FFD700" onclick="copyColor(this)"><span>#FFD700</span></div>
+      <div class="color" style="background:#046307" onclick="copyColor(this)"><span>#046307</span></div>
+      <div class="color" style="background:#4B0082" onclick="copyColor(this)"><span>#4B0082</span></div>
+      <div class="color" style="background:#800020" onclick="copyColor(this)"><span>#800020</span></div>
+      <div class="color" style="background:#0D0D0D" onclick="copyColor(this)"><span>#0D0D0D</span></div>
+    </div>
+  </div>
+
+  <!-- Palette 6 -->
+  <div class="palette">
+    <div class="palette-title">6. Minimal Clean Gold</div>
+    <div class="colors">
+      <div class="color" style="background:#B8860B" onclick="copyColor(this)"><span>#B8860B</span></div>
+      <div class="color light" style="background:#FAF9F6" onclick="copyColor(this)"><span>#FAF9F6</span></div>
+      <div class="color light" style="background:#D8D0C4" onclick="copyColor(this)"><span>#D8D0C4</span></div>
+      <div class="color" style="background:#8A817C" onclick="copyColor(this)"><span>#8A817C</span></div>
+      <div class="color" style="background:#2C2C2C" onclick="copyColor(this)"><span>#2C2C2C</span></div>
+    </div>
+  </div>
+
+  <footer>
+    Click any color to copy the hex code • Made for you
+  </footer>
+
+  <script>
+    function copyColor(el) {
+      const hex = el.querySelector('span').textContent;
+      navigator.clipboard.writeText(hex).then(() => {
+        const original = el.querySelector('span').textContent;
+        el.querySelector('span').textContent = 'Copied!';
+        setTimeout(() => {
+          el.querySelector('span').textContent = original;
+        }, 1000);
+      });
+    }
+  </script>
+
+</body>
+</html>

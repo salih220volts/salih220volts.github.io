@@ -1,0 +1,48 @@
+#contact-hero {
+  background-color: var(#1E1E1E);        /* fills the space around the shrunk image */
+  background-image: url('../images/world-map.jpg');
+  background-size: 50%;                  /* shrinks the image to half its natural size */
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 80px 20px;
+  min-height: 500px;                     /* back to original — container size unaffected */
+}
+
+/* ============================================
+   19. CONTACT BUTTONS — Axis-style blocky
+   [Op 1] Row of 3 buttons, icon + label each.
+   [Op 2] currentColor makes the SVG icon match
+          the button's text color automatically —
+          including on hover, no separate icon
+          file/color needed.
+   [Op 3] Same thick-border/hard-shadow/instant-
+          invert pattern as app-cards and nav.
+   ============================================ */
+.contact-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  position: relative;   /* ensures buttons render above the background map, not behind it */
+  z-index: 1;
+  margin-top: 380px;   /* pushes the buttons down within the section */
+}
+
+.contact-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--cream);
+  background-color: var(--charcoal);
+  border: 3px solid var(--gold);
+  box-shadow: 6px 6px 0 var(--bronze);
+  padding: 14px 24px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.1s ease, color 0.1s ease;
+}
+
+.contact-btn:hover {
+  background-color: var(--gold);
+  color: var(--charcoal);
+}
