@@ -62,3 +62,58 @@ function advanceSlide() {
 }
 
 setInterval(advanceSlide, 3500);
+/* ============================================
+   18. MOBILE NAV TOGGLE
+   [Op 1] Button click toggles nav.open, which
+          the CSS (@media max-width:700px) uses
+          to show/hide the menu.
+   [Op 2] Menu auto-closes after a link is
+          tapped, so it doesn't stay open when
+          the new page loads.
+   ============================================ */
+const navToggle = document.querySelector('.nav-toggle');
+const siteNav = document.querySelector('nav');
+
+if (navToggle && siteNav) {
+  navToggle.addEventListener('click', () => {
+    const isOpen = siteNav.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+
+  siteNav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      siteNav.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+}
+
+/* ============================================
+   20. PROJECT CASE-STUDY IMAGE SLIDER
+   [Op 1] Multi-instance: every .project-slider
+          on the page runs independently (unlike
+          section 17's single global slideshow).
+   [Op 2] Works from prev/next arrows and the
+          dot buttons; no auto-advance.
+   ============================================ */
+document.querySelectorAll('.project-slider').forEach(slider => {
+  const imgs = slider.querySelectorAll('.project-slider__img');
+  const dots = slider.querySelectorAll('.project-slider__dot');
+  const prevBtn = slider.querySelector('.project-slider__arrow--prev');
+  const nextBtn = slider.querySelector('.project-slider__arrow--next');
+  let index = 0;
+
+  function show(i) {
+    imgs.forEach(img => img.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    index = (i + imgs.length) % imgs.length;
+    imgs[index].classList.add('active');
+    if (dots[index]) dots[index].classList.add('active');
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', () => show(index - 1));
+  if (nextBtn) nextBtn.addEventListener('click', () => show(index + 1));
+  dots.forEach((dot, i) => dot.addEventListener('click', () => show(i)));
+
+  show(0);
+});

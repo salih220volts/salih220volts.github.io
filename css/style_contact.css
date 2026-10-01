@@ -1,11 +1,5 @@
 #contact-hero {
-  background-color: var(#1E1E1E);        /* fills the space around the shrunk image */
-  background-image: url('../images/world-map.jpg');
-  background-size: 50%;                  /* shrinks the image to half its natural size */
-  background-position: center;
-  background-repeat: no-repeat;
-  padding: 80px 20px;
-  min-height: 500px;                     /* back to original — container size unaffected */
+  padding: 40px 20px 80px;
 }
 
 /* ============================================
@@ -23,9 +17,6 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  position: relative;   /* ensures buttons render above the background map, not behind it */
-  z-index: 1;
-  margin-top: 380px;   /* pushes the buttons down within the section */
 }
 
 .contact-btn {

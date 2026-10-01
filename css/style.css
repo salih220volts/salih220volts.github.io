@@ -4,6 +4,10 @@
    rule below references these by name.
    Change a color here, it updates everywhere.
    ============================================ */
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --gold: #C9A227;
   --navy: #0A1628;
@@ -469,7 +473,9 @@ body {
   align-items: center;
   justify-content: flex-start;
   gap: 20px;
+  width: 100%;
   max-width: 1000px;
+  min-height: 96px;   /* keeps every card the same height regardless of label length */
   margin: 0 auto 24px;
   padding: 24px 32px;
   background-color: var(--charcoal);
@@ -504,9 +510,7 @@ body {
    LAYOUT size stays the same — only its VISUAL size grows,
    meaning the card/border does not resize to accommodate it. */
 .app-card__logo--large {
-  transform: scale(5.5);   /* 1.5 = 150% visual size, adjust as needed */
-
-
+  transform: scale(1.3);   /* small boost only — 5.5 was ballooning past the card border */
 }
 
 
@@ -712,6 +716,29 @@ html, body {
   max-width: 1000px;
   margin: 80px auto 60px;
   padding: 0 20px;
+  overflow-x: hidden;   /* container never overflows, regardless of child animation widths */
+}
+
+/* The hook-title text reveal animates each span to a FIXED pixel
+   width (--target-width, set per span below) — those fixed widths
+   are wider than a phone screen and were pushing the hero sideways.
+   Shrink them under 700px so the animation still runs but fits. */
+@media (max-width: 700px) {
+  .hook-title {
+    font-size: 1.4rem;
+  }
+
+  .hook-wrap-l1 {
+    --target-width: 150px;
+  }
+
+  .hook-wrap-moving {
+    --target-width: 140px;
+  }
+
+  .hook-wrap-l2b {
+    --target-width: 120px;
+  }
 }
 
 @media (min-width: 900px) {
@@ -797,4 +824,530 @@ IMAGES PLACE :
 .slide-img.incoming {
   transition: none;         /* no animation for this instant repositioning */
   transform: translateX(-100%);
+}
+/* ============================================
+   27. MOBILE NAV — HAMBURGER TOGGLE
+   [Op 1] Button hidden on desktop, shown on
+          mobile via the media query below.
+   [Op 2] nav.open slides the menu into view;
+          driven by JS (javascript/script.js).
+   ============================================ */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin: 0 auto;
+  background-color: var(--gold);
+}
+
+@media (max-width: 700px) {
+  .nav-toggle {
+    display: flex;
+  }
+
+  /* Hidden entirely by default — not just the <ul> — so no leftover
+     border/shadow bar shows under the hamburger when closed. */
+  nav {
+    display: none;
+  }
+
+  /* Floating overlay card: positioned OUT of document flow, so opening
+     it draws on top of the page instead of pushing content down. */
+  nav.open {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 8px;
+    width: calc(100vw - 40px);
+    max-width: 320px;
+    z-index: 50;
+  }
+
+  nav.open ul {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  nav ul li {
+    text-align: center;
+    border-top: 1px solid rgba(248, 241, 227, 0.15);
+  }
+
+  nav ul li a {
+    display: block;
+    padding: 14px 0;
+  }
+}
+
+/* ============================================
+   28b. MOBILE-ONLY HOME CTA ROW
+   [Op 1] "Explore Projects" / "Services" links
+          at the bottom of the home page.
+   [Op 2] Mobile only — hidden by default, shown
+          inside the max-width:700px query below.
+   ============================================ */
+.home-mobile-cta {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .home-mobile-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 20px 50px;
+  }
+
+  .home-mobile-cta .dotted-btn {
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+  }
+}
+
+.dotted-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: var(--charcoal);
+  border: 2px dotted var(--gold);
+  color: var(--gold);
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dotted-btn:hover {
+  background-color: var(--gold);
+  color: var(--charcoal);
+}
+
+/* ============================================
+   28. RESPONSIVE FIXES — EXISTING SECTIONS
+   [Op 1] The apps-stack cards wrap to a 2-col
+          grid on tablets and 1-col on phones,
+          instead of overflowing the viewport.
+   [Op 2] Header stops wrapping oddly on very
+          narrow phones.
+   ============================================ */
+#apps-stack {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  padding: 0 20px 60px;
+}
+
+@media (max-width: 700px) {
+  .site-title {
+    font-size: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 100%;
+  }
+
+  .tagline {
+    font-size: 1rem;
+  }
+
+  /* The reveal animation targets a fixed pixel width (see keyframes
+     revealTagline above) — that width must shrink to match the smaller
+     mobile font, or the tagline overflows the screen on the right. */
+  .tagline-wrap {
+    animation-name: revealTaglineMobile;
+  }
+}
+
+@keyframes revealTaglineMobile {
+  0%   { width: 0; }
+  100% { width: 130px; }
+}
+
+@media (max-width: 360px) {
+  .site-title {
+    font-size: 1.2rem;
+  }
+
+  @keyframes revealTaglineMobile {
+    0%   { width: 0; }
+    100% { width: 110px; }
+  }
+}
+
+/* ============================================
+   29. PROJECT TABS
+   [Op 1] Three filter buttons: Electric Design /
+          Control & Automation / Software.
+   [Op 2] .tab-btn.active = gold fill, rest stay
+          outlined gold, no navy.
+   [Op 3] JS toggles which .tab-panel is visible.
+   ============================================ */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  max-width: 900px;
+  margin: 0 auto 40px;
+  padding: 0 20px;
+}
+
+.tab-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 10px 20px;
+  border: 2px dotted var(--gold);
+  border-radius: 0;
+  background-color: var(--charcoal);
+  color: var(--gold);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.tab-btn:hover {
+  background-color: var(--gold);
+  color: var(--charcoal);
+}
+
+/* Replaces the removed "Projects" hero block — gives the jump-link
+   row and the first section some breathing room from the header. */
+.tabs {
+  padding-top: 50px;
+}
+
+/* Each category is a normal, always-visible section now (no more
+   show/hide panels) — .tab-btn links just scroll down to these.
+   scroll-margin-top keeps the section title clear of the header
+   when the browser jumps to it. */
+.project-section {
+  scroll-margin-top: 20px;
+  padding: 10px 20px 50px;
+}
+
+.project-section__title {
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  color: var(--gold);
+  font-size: 1.6rem;
+  margin-bottom: 24px;
+}
+
+/* ============================================
+   30. PROJECT CARD GRID
+   [Op 1] Used on projects.html inside each
+          tab-panel.
+   [Op 2] Card mirrors the home .card look —
+          hard gold shadow, charcoal accents — so it
+          reads as the same design system.
+   ============================================ */
+.project-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+}
+
+@media (min-width: 700px) {
+  .project-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--charcoal);
+  border: 1px solid var(--nice_grey);
+  border-top: 4px solid var(--gold);
+  box-shadow: 6px 6px 0 var(--bronze);
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--cream);
+  transition: transform 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translate(-2px, -2px);
+}
+
+.project-card__thumb {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  background-color: var(--charcoal);
+}
+
+.project-card__body {
+  padding: 18px 20px 22px;
+}
+
+.project-card__body h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.15rem;
+  margin-bottom: 6px;
+  color: var(--gold);
+}
+
+.project-card__body p {
+  font-size: 0.92rem;
+  color: var(--cream);
+  opacity: 0.85;
+  margin-bottom: 10px;
+}
+
+.project-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.project-card__tags span {
+  font-size: 0.75rem;
+  padding: 3px 9px;
+  border: 1px solid var(--gold);
+  border-radius: 0;
+  color: var(--gold);
+}
+
+.project-card--placeholder {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 50px 20px;
+  color: var(--nice_grey);
+  font-style: italic;
+  box-shadow: none;
+  border-style: dashed;
+}
+
+/* ============================================
+   31. PROJECT IMAGE SLIDER
+   [Op 1] Reusable, multi-instance — unlike the
+          homepage slideshow (single global one),
+          each .project-slider on a page runs
+          independently via data-index.
+   [Op 2] Manual prev/next arrows + dots; no
+          auto-advance timer needed here.
+   [Op 3] Captions label each image (e.g.
+          "Lighting — AutoCAD") under the frame.
+   ============================================ */
+.project-slider {
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto 12px;
+  border: 1px solid var(--nice_grey);
+  box-shadow: 6px 6px 0 var(--bronze);
+  overflow: hidden;
+  background-color: var(--charcoal);
+}
+
+.project-slider__frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+}
+
+.project-slider__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.project-slider__img.active {
+  opacity: 1;
+}
+
+.project-slider__caption {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: 8px 14px;
+  background: rgba(28, 28, 28, 0.78);
+  color: var(--cream);
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+.project-slider__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(28, 28, 28, 0.7);
+  color: var(--cream);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.project-slider__arrow--prev { left: 10px; }
+.project-slider__arrow--next { right: 10px; }
+
+.project-slider__dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 0;
+}
+
+.project-slider__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.project-slider__dot.active {
+  background-color: var(--gold);
+}
+
+/* ============================================
+   32. PDF DOWNLOAD BUTTON
+   [Op 1] .pdf-btn = live state, once a real PDF
+          is placed at the href.
+   [Op 2] .pdf-btn--pending = placeholder state
+          used until the file exists (no dead
+          link shown to visitors).
+   ============================================ */
+.pdf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 18px auto 0;
+  padding: 12px 26px;
+  background-color: var(--gold);
+  color: var(--charcoal);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  border-radius: 4px;
+}
+
+.pdf-btn--pending {
+  background-color: transparent;
+  border: 1px dashed var(--nice_grey);
+  color: var(--nice_grey);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.pdf-btn-wrap {
+  text-align: center;
+  margin: 24px 0 8px;
+}
+
+/* ============================================
+   33. CASE-STUDY DETAIL PAGE
+   [Op 1] Used by project-admin-building.html
+          and project-spice-gym.html.
+   [Op 2] detail-block = each labeled section
+          (Overview / Scope applied / Notes).
+   ============================================ */
+.project-hero {
+  max-width: 900px;
+  margin: 60px auto 10px;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.project-hero h1 {
+  font-family: 'Poppins', sans-serif;
+  color: var(--gold);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+}
+
+.back-link {
+  display: inline-block;
+  margin: 20px 0 0 20px;
+  color: var(--gold);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.project-hero .project-status {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--bronze);
+}
+
+.detail-block {
+  max-width: 700px;
+  margin: 0 auto 36px;
+  padding: 0 20px;
+}
+
+.detail-block h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.25rem;
+  color: var(--gold);
+  border-bottom: 2px solid var(--gold);
+  display: inline-block;
+  padding-bottom: 4px;
+  margin-bottom: 12px;
+}
+
+.detail-block p,
+.detail-block li {
+  color: var(--grey);
+  font-size: 0.95rem;
+}
+
+.detail-block ul {
+  padding-left: 20px;
+}
+
+/* ============================================
+   34. UNDER CONSTRUCTION NOTICE (Control & Automation)
+   ============================================ */
+.under-construction {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 50px 30px;
+  text-align: center;
+  color: var(--nice_grey);
+  border: 1px dashed var(--nice_grey);
+  font-style: italic;
 }

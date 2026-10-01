@@ -17,13 +17,14 @@
   <span class="divider">|</span>
   <span class="tagline-wrap"><span class="tagline">Electrical Design</span></span>
 </h1>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
   <nav>
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="projects.html">Projects</a></li>
       <li><a href="services.html">Services</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
     </ul>
   </nav>
 </header>
@@ -104,8 +105,18 @@
   <article class="app-card">
   <img src="images/icon/python_logo.png" alt="Python logo" class="app-card__logo">
   <div class="app-card__label">Python — Scripting & Automation</div>
+  </article>
   </section>
 
+<!-- ============================================
+     MOBILE-ONLY CTA ROW — hidden on desktop via
+     .home-mobile-cta's CSS (display:none above
+     700px).
+     ============================================ -->
+<div class="home-mobile-cta">
+  <a href="projects.html" class="dotted-btn">Explore Projects</a>
+  <a href="services.html" class="dotted-btn">Services</a>
+</div>
 
 </main>
 <footer>

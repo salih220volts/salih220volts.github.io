@@ -4,45 +4,131 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projects | Sasa Electrical Design</title>
-  <meta name="description" content="Electrical engineering project case studies — coming soon.">
+  <meta name="description" content="Electrical design, control & automation, and software projects by Sasa.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/x-icon" href="images/favicon/logo_S.ico">
 </head>
 <body>
-
 <header>
   <h1 class="site-title">
     <span class="name">Sasa</span>
     <span class="divider">|</span>
     <span class="tagline-wrap"><span class="tagline">Electrical Design</span></span>
   </h1>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
   <nav>
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="projects.html" class="active">Projects</a></li>
       <li><a href="services.html">Services</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
     </ul>
   </nav>
 </header>
-
 <main>
-  <section id="hero">
-    <div class="card">
-      <h2>Projects</h2>
-      <p>Case studies are being prepared and will be published here soon. Check back shortly.</p>
-    </div>
-  </section>
-</main>
 
+<!-- ============================================
+     JUMP LINKS — not tabs anymore. All three
+     sections below are always visible; these
+     just smooth-scroll down to each one.
+     ============================================ -->
+<div class="tabs">
+  <a href="#electrical" class="tab-btn">Electric Design</a>
+  <a href="#automation" class="tab-btn">Control & Automation</a>
+  <a href="#software" class="tab-btn">Software</a>
+</div>
+
+<section id="electrical" class="project-section">
+  <h2 class="project-section__title">Electric Design</h2>
+  <div class="project-grid">
+
+    <a href="project-admin-building.html" class="project-card">
+      <img src="images/projects/admin-building/power_autocad.svg" alt="Administrative building electrical design" class="project-card__thumb">
+      <div class="project-card__body">
+        <h3>Administrative Building (3-Story)</h3>
+        <p>Lighting and power distribution design for a 3-story administrative building.</p>
+        <div class="project-card__tags">
+          <span>AutoCAD</span><span>DIALux</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="project-spice-gym.html" class="project-card">
+      <img src="images/projects/spice-gym/image1.svg" alt="Spice Gym electrical design" class="project-card__thumb">
+      <div class="project-card__body">
+        <h3>Spice Gym</h3>
+        <p>Electrical design case study for the Spice Gym facility.</p>
+        <div class="project-card__tags">
+          <span>AutoCAD</span><span>DIALux</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<section id="automation" class="project-section">
+  <h2 class="project-section__title">Control & Automation</h2>
+  <div class="under-construction">
+    Control & Automation projects — under construction. Check back soon.
+  </div>
+</section>
+
+<section id="software" class="project-section">
+  <h2 class="project-section__title">Software</h2>
+  <div class="project-grid">
+
+    <div class="project-card">
+      <div class="project-card__body">
+        <h3>Football SQL Database + Jarvis</h3>
+        <p>A structured SQL database of football data paired with "Jarvis," a query/assistant layer on top of it.</p>
+        <div class="project-card__tags">
+          <span>SQL</span><span>Python</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-card__body">
+        <h3>RASA Chatbot</h3>
+        <p>A conversational chatbot built with the RASA framework.</p>
+        <div class="project-card__tags">
+          <span>Python</span><span>RASA</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-card__body">
+        <h3>SASA-TUBE</h3>
+        <p>A YouTube downloader app built with Flet and pytube, as a learning project for Flet and networking.</p>
+        <div class="project-card__tags">
+          <span>Python</span><span>Flet</span>
+        </div>
+      </div>
+    </div>
+
+    <a href="https://github.com/salih220volts/zikr-app" class="project-card" target="_blank" rel="noopener">
+      <div class="project-card__body">
+        <h3>ZikrApp</h3>
+        <p>A mobile app for daily dhikr/remembrance tracking.</p>
+        <div class="project-card__tags">
+          <span>App</span><span>GitHub ↗</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+</main>
 <footer>
   <p>Contact: <a href="mailto:salihelhadi2004@gmail.com">salihelhadi2004@gmail.com</a></p>
   <p>&copy; 2026 Sasa. All rights reserved.</p>
 </footer>
-
-<script src="js/script.js"></script>
+<script src="javascript/script.js"></script>
 </body>
 </html>
